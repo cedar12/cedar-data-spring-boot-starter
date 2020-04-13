@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 
@@ -36,7 +33,7 @@ public class CedarDataSpringBootRegister implements BeanDefinitionRegistryPostPr
     @Autowired
     public void setCedarDataJdbcTemplate(JdbcTemplate cedarDataJdbcTemplate) {
         this.cedarDataJdbcTemplate = cedarDataJdbcTemplate;
-        InstanceFactory.setJdbcManager(new JdbcTemplatelManager(cedarDataJdbcTemplate));
+        InstanceFactory.setJdbcManager(new JdbcTemplateManager(cedarDataJdbcTemplate));
     }
 
     private static final String EVN="cedar-data-spring-boot-starter";
@@ -63,7 +60,7 @@ public class CedarDataSpringBootRegister implements BeanDefinitionRegistryPostPr
         }
         String displaySql=properties.getEnvironment().getProperty(CedarDataProperties.DISPLAY_SQL);
         if(displaySql!=null){
-            JdbcTemplatelManager.displaySql=Boolean.parseBoolean(displaySql);
+            JdbcTemplateManager.displaySql=Boolean.parseBoolean(displaySql);
         }
         CedarDataBeanDefinitionScanner scanner = new CedarDataBeanDefinitionScanner(registry,basePackage);
         scanner.doScan(basePackage);

@@ -20,7 +20,7 @@ public class CedarDataAutoConfiguration {
 
     @DependsOn("cedarDataProperties")
     @Bean
-    public CedarDataSpringBootRegister cedarDataSpringBootRegister(CedarDataProperties cedarDataProperties){
+    public static CedarDataSpringBootRegister cedarDataSpringBootRegister(CedarDataProperties cedarDataProperties){
         return new CedarDataSpringBootRegister(cedarDataProperties);
     }
 
@@ -30,7 +30,7 @@ public class CedarDataAutoConfiguration {
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource){
         JdbcTemplate jdbcTemplate=new JdbcTemplate(dataSource);
-        InstanceFactory.setJdbcManager(new JdbcTemplatelManager(jdbcTemplate));
+        InstanceFactory.setJdbcManager(new JdbcTemplateManager(jdbcTemplate));
         return jdbcTemplate;
     }
 

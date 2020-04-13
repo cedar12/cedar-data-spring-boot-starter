@@ -57,7 +57,7 @@ class CedarDataBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
             public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
                 String className=metadataReader.getClassMetadata().getClassName();
                 try {
-                    Class<?> cls= ClassLoader.getSystemClassLoader().loadClass(className);
+                    Class<?> cls= Class.forName(className);
                     CedarData cedarData=cls.getAnnotation(CedarData.class);
                     if(cedarData!=null){
                         return true;
