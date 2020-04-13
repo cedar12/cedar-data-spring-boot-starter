@@ -1,12 +1,12 @@
 # Cedar Data Spring Boot Starter
-一个易于使用的cedar-data(1.1.8+)框架的Spring Boot集成组件
+一个易于使用的cedar-data(1.2.0+)框架的Spring Boot集成组件
 
 依赖
 ```xml
 <dependency>
   <groupId>com.github.cedar12</groupId>
   <artifactId>cedar-data-spring-boot-starter</artifactId>
-  <version>1.1.8</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
