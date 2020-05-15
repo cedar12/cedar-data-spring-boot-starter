@@ -10,10 +10,10 @@ import javax.sql.DataSource;
 
 
 /**
- * @author cedar12 413338772@qq.com
+ * @author cedar12.zxd@qq.com
  */
 @ComponentScan("cn.cedar.cedar.data.spring.boot")
-@EnableConfigurationProperties(CedarDataProperties.class)
+@EnableConfigurationProperties({CedarDataProperties.class})
 @Configuration
 @ConditionalOnClass(JdbcTemplate.class)
 public class CedarDataAutoConfiguration {

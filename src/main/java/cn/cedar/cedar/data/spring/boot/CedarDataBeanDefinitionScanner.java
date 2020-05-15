@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * @author cedar12 413338772@qq.com
+ * @author cedar12.zxd@qq.com
  */
 class CedarDataBeanDefinitionScanner extends ClassPathBeanDefinitionScanner {
 

@@ -4,7 +4,7 @@ import cn.cedar.data.InstanceFactory;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
- * @author cedar12 413338772@qq.com
+ * @author cedar12.zxd@qq.com
  */
 public class CedarDataSpringProxyFactory<T> implements FactoryBean<T> {
 

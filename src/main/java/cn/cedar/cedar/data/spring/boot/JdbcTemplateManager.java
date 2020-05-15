@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author cedar12 413338772@qq.com
+ * @author cedar12.zxd@qq.com
  */
 public class JdbcTemplateManager extends JdbcManager {
 

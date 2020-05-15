@@ -2,6 +2,7 @@ package cn.cedar.cedar.data.spring.boot;
 
 import cn.cedar.data.InstanceFactory;
 import cn.cedar.data.JdbcManager;
+import cn.cedar.data.expcetion.CedarDataRuntimeException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -13,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.sql.Connection;
 
 /**
- * @author cedar12 413338772@qq.com
+ * @author cedar12.zxd@qq.com
  */
 public class CedarDataSpringBootRegister implements BeanDefinitionRegistryPostProcessor {
     private String[] basePackage;
@@ -44,23 +45,24 @@ public class CedarDataSpringBootRegister implements BeanDefinitionRegistryPostPr
     public CedarDataSpringBootRegister(CedarDataProperties properties) {
         InstanceFactory.setEnv(EVN);
         this.properties=properties;
-        this.basePackage=properties.getEnvironment().getProperty(CedarDataProperties.SCAN_PACKAGE).split(",");
+        if(properties.getScanPackage()==null){
+            this.basePackage="".split(",");
+        }else {
+            this.basePackage = properties.getScanPackage().split(",");
+        }
+        if(this.basePackage==null){
+            throw new CedarDataRuntimeException(" cedar.data.scan-package or cedar.data.scanPackage is null");
+        }
     }
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         this.registry=registry;
-        if (basePackage==null||basePackage.length==0) {
-            return;
+        if(properties.getMaxLayer()!=0){
+            InstanceFactory.setMaxLayer(properties.getMaxLayer());
         }
-
-        String maxLayer=properties.getEnvironment().getProperty(CedarDataProperties.MAX_LAYER);
-        if(maxLayer!=null){
-            InstanceFactory.setMaxLayer(Integer.parseInt(maxLayer));
-        }
-        String displaySql=properties.getEnvironment().getProperty(CedarDataProperties.DISPLAY_SQL);
-        if(displaySql!=null){
-            JdbcTemplateManager.displaySql=Boolean.parseBoolean(displaySql);
+        if(properties.isDisplaySql()){
+            JdbcTemplateManager.displaySql=properties.isDisplaySql();
         }
         CedarDataBeanDefinitionScanner scanner = new CedarDataBeanDefinitionScanner(registry,basePackage);
         scanner.doScan(basePackage);
