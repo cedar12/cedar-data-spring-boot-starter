@@ -1,4 +1,19 @@
-package cn.cedar.cedar.data.spring.boot;
+/**
+ *	  Copyright 2020 cedar12.zxd@qq.com
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package cn.cedar.data.spring.boot;
 
 import cn.cedar.data.JdbcManager;
 import org.apache.commons.logging.Log;
@@ -41,23 +56,26 @@ public class JdbcTemplateManager extends JdbcManager {
     @Override
     public List<Map<String, Object>> excuteQuery(String sql, Object... params) {
         displaySql(sql);
-        return jdbcTemplate.queryForList(sql);
+        return jdbcTemplate.queryForList(sql,params);
     }
 
     @Override
     public int excute(String sql, Object... params) {
         displaySql(sql);
-        return jdbcTemplate.update(sql);
+        return jdbcTemplate.update(sql,params);
     }
 
     @Override
-    public int excuteGetGeneratedKey(final String sql, Object... params) {
+    public int excuteGetGeneratedKey(final String sql, final Object... params) {
         displaySql(sql);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rc = jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(java.sql.Connection con) throws SQLException {
                 PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                for (int i = 0; i < params.length; i++) {
+                    ps.setObject(i+1,params[i]);
+                }
                 return ps;
             }
         }, keyHolder);
@@ -73,7 +91,7 @@ public class JdbcTemplateManager extends JdbcManager {
         displaySql(sql);
         Map<String, Object> map=new HashMap<>();
         try {
-            map = jdbcTemplate.queryForMap(sql);
+            map = jdbcTemplate.queryForMap(sql,params);
         }catch(EmptyResultDataAccessException e){
             log.error(e.getMessage());
         }catch(DataAccessException e){
@@ -85,6 +103,6 @@ public class JdbcTemplateManager extends JdbcManager {
     @Override
     public long excuteQueryCount(String sql, Object... params) {
         displaySql(sql);
-        return jdbcTemplate.queryForObject(sql, Long.class);
+        return jdbcTemplate.queryForObject(sql, params,Long.class);
     }
 }

@@ -1,0 +1,21 @@
+{
+  "properties": [
+    {
+      "defaultValue": false,
+      "name": "cedar.data.display-sql",
+      "description": "Output the resulting SQL statement on the console.\n将最终生成sql显示控制台",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "defaultValue": 5,
+      "name": "cedar.data.max-layer",
+      "description": "Maximum number of import levels.\n最大import层数",
+      "type": "java.lang.Integer"
+    },
+    {
+      "name": "cedar.data.scan-package",
+      "type": "java.lang.String",
+      "deprecation": "Scan Packages.\n扫描包"
+    }
+  ]
+}
